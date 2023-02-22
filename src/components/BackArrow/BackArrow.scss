@@ -1,0 +1,17 @@
+.button-back {
+    appearance: none;
+    width: 45px;
+    height: 45px;
+    background-image: url("./../../../public/static/images/path.svg");
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-color: #ff000028;
+    border: none;
+    background-position: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.button-back:hover {
+    background-color: #ff000068;
+}
