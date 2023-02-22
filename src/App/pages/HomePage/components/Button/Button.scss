@@ -1,0 +1,27 @@
+.button {
+  display: flex;
+  box-sizing: content-box;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 39px;
+  background: #ff0000;
+  border: none;
+  cursor: pointer;
+  border-radius: 7px;
+  color: white;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 39px;
+  text-align: center;
+  &:hover {
+    opacity: 0.5;
+  }
+  &.button_disabled {
+    background: #d9d9d9;
+    &:hover {
+      opacity: 1;
+      cursor: default;
+    }
+  }
+}
