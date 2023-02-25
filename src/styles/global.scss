@@ -1,0 +1,9 @@
+a:-webkit-any-link {
+  text-decoration: none;
+  color: black;
+}
+
+@mixin project-font {
+  font-family: "Avenir", sans-serif;
+  font-style: normal;
+}
