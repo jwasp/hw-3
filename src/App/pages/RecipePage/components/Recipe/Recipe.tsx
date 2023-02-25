@@ -1,8 +1,7 @@
-import "./Recipe.scss";
-
+import BackArrow from "@components/BackArrow";
 import { Ingredients } from "@pages/RecipePage/RecipePage";
 
-import BackArrow from "../../../../../components/BackArrow";
+import styles from "./Recipe.module.scss";
 
 export type RecipeProps = {
   image: string;
@@ -19,34 +18,30 @@ const Recipe: React.FC<RecipeProps> = ({
   likes,
   time,
   ingredients,
-}) => {
-  return (
-    <>
-      <div className="recipe-container">
-        <div className="recipe__back-button">
-          <BackArrow pathName={"/"} />
-        </div>
-        <img src={image} alt="recipeImg" className="recipe-container__img" />
-        <div className="recipe-container__info">
-          <div className="recipe__title">{title}</div>
-          <span className="recipe__time">{`${time} minutes`}</span>
-          <span className="recipe__likes">{`${likes} likes`}</span>
-          <div className="reciper__ingredients">
-            <ul>
-              {ingredients?.map((ingredient: Ingredients) => {
-                return (
-                  <li key={`${ingredient.name}-${ingredient.id}`}>
-                    {ingredient.name}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <p className="recipe__content">{content}</p>
-        </div>
+}) => (
+  <div className={styles.container}>
+    <div className={styles.recipe__button}>
+      <BackArrow pathName="/" />
+    </div>
+    <img src={image} alt="recipeImg" className={styles.container__img} />
+    <div className={styles.container__info}>
+      <div className={styles.recipe__title}>{title}</div>
+      <span className={styles.recipe__time}>{`${time} minutes`}</span>
+      <span className={styles.recipe__likes}>{`${likes} likes`}</span>
+      <div className={styles.recipe__ingredients}>
+        <ul>
+          {ingredients?.map((ingredient: Ingredients) => {
+            return (
+              <li key={`${ingredient.name}-${ingredient.id}`}>
+                {ingredient.name}
+              </li>
+            );
+          })}
+        </ul>
       </div>
-    </>
-  );
-};
+      <p className={styles.recipe__content}>{content}</p>
+    </div>
+  </div>
+);
 
 export default Recipe;

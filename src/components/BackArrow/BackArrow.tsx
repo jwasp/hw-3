@@ -1,6 +1,8 @@
-import "./BackArrow.scss";
-//import backButton from '../../../common/assets/controls/back-btn.svg';
+import React from "react";
+
 import { useNavigate } from "react-router-dom";
+
+import styles from "./BackArrow.module.scss";
 
 export type BackArrowProps = {
   pathName: string;
@@ -13,14 +15,8 @@ const BackArrow: React.FC<BackArrowProps> = ({ pathName }) => {
     navigate(pathName);
   };
   return (
-    <div>
-      <button
-        type="button"
-        onClick={handleBack}
-        className="button-back"
-      ></button>
-    </div>
+    <button type="button" onClick={handleBack} className={styles.button} />
   );
 };
 
-export default BackArrow;
+export default React.memo(BackArrow);
