@@ -1,10 +1,12 @@
+@import "@styles/vars.scss";
+
 .card {
   width: 500px;
   height: 300px;
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
-  background-color: white;
+  background-color: $whiteColor;
   cursor: pointer;
   &:hover {
     box-shadow: 0px 5px 5px rgb(91, 91, 94);
@@ -23,23 +25,14 @@
   font-size: 25px;
   margin-left: 6px;
   padding-top: 5px;
-  font-family: "Avenir";
-  font-style: normal;
   font-weight: 500;
   text-decoration: none;
-}
-
-a:-webkit-any-link {
-  text-decoration: none;
-  color: black;
 }
 
 .card__subtitle {
   font-size: 5px;
   margin-left: 6px;
   padding-top: 6px;
-  font-family: "Avenir";
-  font-style: normal;
   font-weight: 400;
 }
 

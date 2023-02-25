@@ -9,9 +9,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/recipe">
-            <Route path=":id" element={<RecipePage />} />
-          </Route>
+          <Route path="/recipe/:id" element={<RecipePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

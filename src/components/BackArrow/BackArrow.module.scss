@@ -1,0 +1,17 @@
+@import "@styles/vars";
+
+$size: 45px;
+
+.button {
+  appearance: none;
+  width: $size;
+  height: $size;
+  background: url("~/public/static/images/path.svg") center / 12px no-repeat
+    $lightRedColor;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: $transparentRedColor;
+  }
+}
