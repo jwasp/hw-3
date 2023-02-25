@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { apiKey } from "@config/api_key";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -10,10 +11,18 @@ export type Ingredients = {
   id: number;
 };
 
+export type RecipeType = {
+  image: string;
+  title: string;
+  description: string;
+  likes: number;
+  cookingTime: number;
+  ingredients: Ingredients[];
+};
+
 const RecipePage = () => {
-  const [recipe, setRecipe] = useState<any>({});
+  const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const { id } = useParams();
-  const apiKey = "64f5d5ce908a45d784869a4ce145d792";
 
   useEffect(() => {
     const fetch = async () => {
@@ -37,16 +46,18 @@ const RecipePage = () => {
     fetch();
   }, [id]);
   return (
-    <div>
-      <Recipe
-        image={recipe.image}
-        title={recipe.title}
-        content={recipe.description}
-        likes={recipe.likes}
-        time={recipe.cookingTime}
-        ingredients={recipe.ingredients}
-      />
-    </div>
+    <>
+      {recipe && (
+        <Recipe
+          image={recipe.image}
+          title={recipe.title}
+          content={recipe.description}
+          likes={recipe.likes}
+          time={recipe.cookingTime}
+          ingredients={recipe.ingredients}
+        />
+      )}
+    </>
   );
 };
 

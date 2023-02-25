@@ -1,13 +1,8 @@
-import "./RecipesList.scss";
+import { Recipe } from "@pages/HomePage/HomePage";
 import { Link } from "react-router-dom";
 
-import { Card } from "../Card/Card";
-
-export type Recipe = {
-  id: number;
-  title: string;
-  image: string;
-};
+import Card from "./components/Card";
+import styles from "./RecipesList.module.scss";
 
 export type RecipesListProps = {
   recipes: Recipe[];
@@ -15,7 +10,7 @@ export type RecipesListProps = {
 
 const RecipesList: React.FC<RecipesListProps> = ({ recipes }) => {
   return (
-    <div className="RecipeList_container">
+    <div className={styles.RecipeList_container}>
       {recipes.map((recipe: Recipe) => (
         <Link to={`/recipe/${recipe.id}`} key={recipe.id}>
           <Card image={recipe.image} title={recipe.title} />
