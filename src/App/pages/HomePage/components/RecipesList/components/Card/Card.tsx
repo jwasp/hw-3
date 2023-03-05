@@ -7,7 +7,7 @@ export type CardProps = {
   onClick?: React.MouseEventHandler;
 };
 
-const Card: React.FC<CardProps> = ({ image, title, content, onClick }): any => {
+const Card: React.FC<CardProps> = ({ image, title, content, onClick }) => {
   return (
     <div className={styles.card} onClick={onClick}>
       {content}
