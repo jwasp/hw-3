@@ -1,3 +1,5 @@
+import React from "react";
+
 import BackArrow from "@components/BackArrow";
 import Loader from "@components/Loader";
 import { IngredientItemModel } from "@store/models/recipes";
@@ -31,7 +33,7 @@ const Recipe: React.FC<RecipeProps> = ({
         <div className={styles.recipe__button}>
           <BackArrow pathName="/" />
         </div>
-        <img src={image} alt="recipeImg" className={styles.container__img} />
+        <img src={image} alt="recipe img" className={styles.container__img} />
         <div className={styles.container__info}>
           <div className={styles.recipe__title}>{title}</div>
           <span className={styles.recipe__time}>{`${time} minutes`}</span>
@@ -54,4 +56,4 @@ const Recipe: React.FC<RecipeProps> = ({
   </>
 );
 
-export default Recipe;
+export default React.memo(Recipe);

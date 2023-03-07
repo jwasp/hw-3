@@ -8,7 +8,7 @@ import {
 } from "@store/models/shared/collection";
 import rootStore from "@store/RootStore";
 import { Meta } from "@utils/Meta";
-import { ILOcalStore } from "@utils/useLocalStore";
+import { ILocalStore } from "@utils/useLocalStore";
 import axios from "axios";
 import {
   makeObservable,
@@ -20,22 +20,19 @@ import {
   IReactionDisposer,
 } from "mobx";
 
-type PrivateFields = "_recipes" | "_meta" | "_searchRecipe" | "_shownAmount";
-export default class RecipesStore implements ILOcalStore {
+type PrivateFields = "_recipes" | "_meta" | "_searchRecipe";
+export default class RecipesStore implements ILocalStore {
   private _recipes: CollectionModel<number, RecipeItemModel> =
     getInitialCollectionModel();
-  private _meta: Meta = Meta.initial;
-  private _shownAmount: number = 4;
-  private _searchRecipe: string = "";
+  private _meta = Meta.initial;
+  private _searchRecipe = "";
 
   constructor() {
     makeObservable<RecipesStore, PrivateFields>(this, {
       _recipes: observable.ref,
-      _shownAmount: observable,
       _meta: observable,
       _searchRecipe: observable,
       recipes: computed,
-      shownAmount: computed,
       searchRecipe: computed,
       meta: computed,
       getRecipes: action,
@@ -54,32 +51,30 @@ export default class RecipesStore implements ILOcalStore {
   get searchRecipe(): string {
     return this._searchRecipe;
   }
-  get shownAmount(): number {
-    return this._shownAmount;
-  }
 
-  write = (str: any): void => {
+  write = (str: string): void => {
     this._searchRecipe = str;
   };
 
-  increaseAmount = (num: number): void => {
-    this._shownAmount += num;
-  };
-
-  async getRecipes(search: string | string[] | any | undefined): Promise<void> {
+  async getRecipes(
+    search: string | string[] | any | undefined,
+    page: number,
+    offset: number
+  ): Promise<void> {
     this._meta = Meta.loading;
     this._recipes = getInitialCollectionModel();
-    const response = await axios({
-      method: "get",
-      url: `https://api.spoonacular.com/recipes/complexSearch?query=${search}&number=${this._shownAmount}&apiKey=${apiKey}`,
-    });
+    try {
+      const response = await axios({
+        method: "get",
+        url: `https://api.spoonacular.com/recipes/complexSearch?query=${search}&page=${page}&number=4&offset=${offset}&apiKey=${apiKey}`,
+      });
 
-    runInAction(() => {
-      if (!response.status) {
-        this._meta = Meta.error;
-      }
+      runInAction(() => {
+        if (response.status !== 200) {
+          this._meta = Meta.error;
+          return;
+        }
 
-      try {
         const recipes: RecipeItemModel[] = [];
 
         for (const item of response.data.results) {
@@ -91,14 +86,13 @@ export default class RecipesStore implements ILOcalStore {
           recipes,
           (recipeItem) => recipeItem.id
         );
-        return;
-      } catch (e) {
-        /* eslint-disable no-console */
-        console.log(e);
-        this._meta = Meta.error;
-        this._recipes = getInitialCollectionModel();
-      }
-    });
+      });
+    } catch (e) {
+      /* eslint-disable no-console */
+      console.log(e);
+      this._meta = Meta.error;
+      this._recipes = getInitialCollectionModel();
+    }
   }
 
   destroy(): void {
@@ -108,7 +102,7 @@ export default class RecipesStore implements ILOcalStore {
   private readonly _qpReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     async (search) => {
-      await this.getRecipes(search);
+      await this.getRecipes(search, 1, 4);
     }
   );
 }

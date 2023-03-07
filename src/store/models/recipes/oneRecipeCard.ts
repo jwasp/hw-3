@@ -7,10 +7,10 @@ import {
 export type RecipeCardApi = {
   image: string;
   title: string;
-  description: string;
+  instructions: string;
   aggregateLikes: number;
   readyInMinutes: number;
-  ingredients: IngredientItemApi[];
+  extendedIngredients: IngredientItemApi[];
   cheap: boolean;
   glutenFree: boolean;
   healthScore: number;
@@ -36,10 +36,10 @@ export type RecipeCardModel = {
 export const normalizeRecipeCard = (from: RecipeCardApi): RecipeCardModel => ({
   image: from.image,
   title: from.title,
-  description: from.description,
+  description: from.instructions,
   likes: from.aggregateLikes,
   cookingTime: from.readyInMinutes,
-  ingredients: from.ingredients.map((ingredient) =>
+  ingredients: from.extendedIngredients.map((ingredient) =>
     normalizeIngredientItem(ingredient)
   ),
 });

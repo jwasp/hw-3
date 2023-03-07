@@ -1,7 +1,11 @@
 import { apiKey } from "@config/api_key";
-import { IngredientItemModel, RecipeCardModel } from "@store/models/recipes";
+import {
+  normalizeRecipeCard,
+  RecipeCardApi,
+  RecipeCardModel,
+} from "@store/models/recipes";
 import { Meta } from "@utils/Meta";
-import { ILOcalStore } from "@utils/useLocalStore";
+import { ILocalStore } from "@utils/useLocalStore";
 import axios from "axios";
 import {
   makeObservable,
@@ -12,9 +16,9 @@ import {
 } from "mobx";
 
 type PrivateFields = "_recipe" | "_meta";
-export default class OneRecipeStore implements ILOcalStore {
-  private _recipe: RecipeCardModel | undefined;
-  private _meta: Meta = Meta.initial;
+export default class OneRecipeStore implements ILocalStore {
+  private _recipe: RecipeCardModel | null = null;
+  private _meta = Meta.initial;
 
   constructor() {
     makeObservable<OneRecipeStore, PrivateFields>(this, {
@@ -26,7 +30,7 @@ export default class OneRecipeStore implements ILOcalStore {
     });
   }
 
-  get recipe(): RecipeCardModel | undefined {
+  get recipe(): RecipeCardModel | null {
     return this._recipe;
   }
   get meta(): Meta {
@@ -35,54 +39,28 @@ export default class OneRecipeStore implements ILOcalStore {
 
   async getRecipe(id: string | undefined): Promise<void> {
     this._meta = Meta.loading;
-    this._recipe = {
-      image: "",
-      title: "",
-      description: "",
-      likes: 0,
-      cookingTime: 0,
-      ingredients: [],
-    };
-    const response: any = await axios({
-      method: "get",
-      url: `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`,
-    });
+    this._recipe = null;
+    try {
+      const response = await axios<RecipeCardApi>({
+        method: "get",
+        url: `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`,
+      });
 
-    runInAction(() => {
-      if (!response.status) {
-        this._meta = Meta.error;
-      }
+      runInAction(() => {
+        if (response.status !== 200) {
+          this._meta = Meta.error;
+          return;
+        }
 
-      try {
         this._meta = Meta.success;
-
-        this._recipe = {
-          image: response.data.image,
-          title: response.data.title,
-          description: response.data.instructions,
-          likes: response.data.aggregateLikes,
-          cookingTime: response.data.readyInMinutes,
-          ingredients: response.data.extendedIngredients.map(
-            (item: IngredientItemModel) => {
-              return { name: item.name, id: item.id };
-            }
-          ),
-        };
-        return;
-      } catch (e) {
-        /* eslint-disable no-console */
-        console.log(e);
-        this._meta = Meta.error;
-        this._recipe = {
-          image: "",
-          title: "",
-          description: "",
-          likes: 0,
-          cookingTime: 0,
-          ingredients: [],
-        };
-      }
-    });
+        this._recipe = normalizeRecipeCard(response.data);
+      });
+    } catch (e) {
+      /* eslint-disable no-console */
+      console.log(e);
+      this._meta = Meta.error;
+      this._recipe = null;
+    }
   }
   destroy(): void {}
 }
