@@ -1,9 +1,10 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 
 import Loader from "@components/Loader";
 import RecipesStore from "@store/RecipesStore";
 import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
 import { Meta } from "@utils/Meta";
+import useDebounce from "@utils/useDebounce";
 import { useLocalStore } from "@utils/useLocalStore";
 import { Input } from "antd";
 import { observer } from "mobx-react-lite";
@@ -16,35 +17,59 @@ const HomePage: React.FC = () => {
   const recipesStore = useLocalStore(() => new RecipesStore());
   const navigate = useNavigate();
   const initSearch = useLocation();
+  let searchValue = initSearch.search.split("=")[1] ?? "";
+  const [value, setValue] = useState(searchValue);
+  const [page, setPage] = useState(1);
+  const [offset, setOffset] = useState(0);
+  const debouncedValueSearch = useDebounce<string | number>(value, 1000);
+  const debouncedValueScroll = useDebounce<string | number>(page, 500);
 
   const handleChangeValue = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      recipesStore.write(e.target.value),
-    [recipesStore]
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+      setPage(1);
+      setOffset(0);
+    },
+    []
   );
-  let searchValue = initSearch.search.split("=")[1] ?? "";
+
+  useEffect(() => {
+    recipesStore.write(value);
+  }, [debouncedValueSearch]);
+
   useEffect(() => {
     navigate(`/?search=${recipesStore.searchRecipe}`);
   }, [recipesStore.searchRecipe]);
 
-  useEffect(() => {
-    navigate(`/?search=${searchValue}`);
-    recipesStore.getRecipes(searchValue);
-  }, [recipesStore.shownAmount]);
-
-  const handleClick = () => {
-    recipesStore.increaseAmount(4);
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 1 >=
+      document.documentElement.scrollHeight
+    ) {
+      setPage((prev) => prev + 1);
+      setOffset((prev) => prev + 4);
+    }
   };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    recipesStore.getRecipes(searchValue, page, offset);
+  }, [debouncedValueScroll]);
 
   return (
     <>
       <Input
-        value={searchValue}
+        value={value}
         onChange={handleChangeValue}
         style={{ width: 560, margin: 10, height: 40 }}
       />
       {recipesStore.meta === Meta.loading && <Loader loading />}
-      <RecipesList recipes={recipesStore.recipes} handleClick={handleClick} />
+      <RecipesList recipes={recipesStore.recipes} />
     </>
   );
 };

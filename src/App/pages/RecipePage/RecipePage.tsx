@@ -14,7 +14,7 @@ const RecipePage = () => {
 
   useEffect(() => {
     recipeStore.getRecipe(id);
-  }, [recipeStore]);
+  }, [id]);
   if (recipeStore.recipe) {
     return (
       <Recipe

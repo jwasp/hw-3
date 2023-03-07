@@ -9,10 +9,9 @@ import styles from "./RecipesList.module.scss";
 
 export type RecipesListProps = {
   recipes: RecipeItemModel[];
-  handleClick: () => void;
 };
 
-const RecipesList: React.FC<RecipesListProps> = ({ recipes, handleClick }) => {
+const RecipesList: React.FC<RecipesListProps> = ({ recipes }) => {
   return (
     <div className={styles.RecipeList_container}>
       {recipes.map((recipe: RecipeItemModel) => (
@@ -20,7 +19,6 @@ const RecipesList: React.FC<RecipesListProps> = ({ recipes, handleClick }) => {
           <Card image={recipe.image} title={recipe.title} />
         </Link>
       ))}
-      {recipes.length !== 0 && <Button onClick={handleClick}>show more</Button>}
     </div>
   );
 };
