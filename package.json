@@ -2,6 +2,10 @@
   "name": "cra-food",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/jwasp/hw-3.git",
+  "author": "jwasp <nigushaa@yandex.ru>",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -59,6 +63,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.4",
     "react-app-rewire-alias": "^1.1.7",
-    "react-app-rewired": "^2.2.1"
+    "react-app-rewired": "^2.2.1",
+    "webpack": "^5.76.0"
   }
 }
