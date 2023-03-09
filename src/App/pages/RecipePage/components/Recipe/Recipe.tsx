@@ -1,5 +1,5 @@
-import BackArrow from "@components/BackArrow";
-import { Ingredients } from "@pages/RecipePage/RecipePage";
+import BackArrow from "components/BackArrow";
+import { Ingredients } from "pages/RecipePage/RecipePage";
 
 import styles from "./Recipe.module.scss";
 

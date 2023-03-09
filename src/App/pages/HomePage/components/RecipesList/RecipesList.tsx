@@ -1,4 +1,4 @@
-import { Recipe } from "@pages/HomePage/HomePage";
+import { Recipe } from "pages/HomePage/HomePage";
 import { Link } from "react-router-dom";
 
 import Card from "./components/Card";

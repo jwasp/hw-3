@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { apiKey } from "@config/api_key";
+import { apiKey } from "config/api_key";
 import axios from "axios";
 
 import RecipesList from "./components/RecipesList";
