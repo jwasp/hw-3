@@ -66,7 +66,7 @@ export default class RecipesStore implements ILocalStore {
     try {
       const response = await axios({
         method: "get",
-        url: `https://api.spoonacular.com/recipes/complexSearch?query=${search}&page=${page}&number=4&offset=${offset}&apiKey=${apiKey}`,
+        url: `https://api.spoonacular.com/recipes/complexSearch?query=${search}&page=${page}&number=8&offset=${offset}&apiKey=${apiKey}`,
       });
 
       runInAction(() => {
@@ -102,7 +102,7 @@ export default class RecipesStore implements ILocalStore {
   private readonly _qpReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     async (search) => {
-      await this.getRecipes(search, 1, 4);
+      await this.getRecipes(search, 1, 0);
     }
   );
 }
