@@ -1,12 +1,14 @@
 .App {
   text-align: center;
   background-color: #F5F5F5;
-  height: 100%;
   background-size: contain;
   background-image: url('~/public/static/images/background-corner.svg');
   background-repeat: no-repeat;
   background-position: top right;
   overflow: auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 
