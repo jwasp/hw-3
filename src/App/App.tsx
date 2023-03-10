@@ -1,6 +1,6 @@
 import "./App.css";
-import HomePage from "pages/HomePage";
-import RecipePage from "pages/RecipePage";
+import HomePage from "./pages/HomePage";
+import RecipePage from "./pages/RecipePage";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const App = () => {

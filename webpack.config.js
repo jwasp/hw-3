@@ -45,7 +45,7 @@ module.exports = {
         use: getSettingsForStyles(),
       },
       {
-        test: /\.(js|jsx|cjs|ts|tsx)$/,
+        test: /\.[tj]sx?$/,
         use: "babel-loader",
       },
       {
@@ -71,8 +71,9 @@ module.exports = {
       config: path.join(srcPath, "config"),
       styles: path.join(srcPath, "styles"),
       utils: path.join(srcPath, "utils"),
-      models: path.join(srcPath, "models"),
-      pages: path.join(srcPath, "/App/pages"),
+      models: path.join(srcPath, "store/models"),
+      pages: path.join(srcPath, "App/pages"),
+      store: path.join(srcPath, "store"),
     },
   },
   plugins: [
