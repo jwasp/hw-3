@@ -24,8 +24,6 @@ const HomePage = () => {
     };
     fetch();
   }, []);
-/* eslint-disable */
-  console.log(recipes);
   return <RecipesList recipes={recipes} />;
 };
 
