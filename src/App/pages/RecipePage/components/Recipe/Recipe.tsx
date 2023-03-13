@@ -2,7 +2,7 @@ import React from "react";
 
 import BackArrow from "components/BackArrow";
 import Loader from "components/Loader";
-import { IngredientItemModel } from "store/models/recipes/ingredientItem";
+import { IngredientItemModel } from "store/models/recipes";
 import { Meta } from "utils/Meta";
 
 import styles from "./Recipe.module.scss";

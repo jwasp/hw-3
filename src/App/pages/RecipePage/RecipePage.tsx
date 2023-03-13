@@ -5,7 +5,7 @@ import { useLocalStore } from "utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
-import Recipe from "./../RecipePage/components/Recipe";
+import Recipe from "./components/Recipe";
 
 const RecipePage = () => {
   const recipeStore = useLocalStore(() => new OneRecipeStore());
