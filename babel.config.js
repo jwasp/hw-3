@@ -12,7 +12,8 @@ module.exports = (api) => {
     ],
   ];
   const plugins = [
-      process.env.NODE_ENV === 'development' && 'react-refresh/babel'
+    "@babel/plugin-proposal-optional-chaining",
+    process.env.NODE_ENV === "development" && "react-refresh/babel",
   ].filter(Boolean);
 
   return {
