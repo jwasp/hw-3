@@ -1,13 +1,12 @@
 import { useEffect, useCallback, useState } from "react";
 
-
 import { RecipeItemModel } from "@store/models/recipes";
 import RecipesStore from "store/RecipesStore";
 import Loader from "components/Loader";
+import Input from "components/Input";
 import { Meta } from "utils/Meta";
 import useDebounce from "utils/useDebounce";
 import { useLocalStore } from "utils/useLocalStore";
-import { Input } from "antd";
 import { observer } from "mobx-react-lite";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -29,9 +28,6 @@ const HomePage = () => {
   const handleChangeValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
-      setPage(1);
-      setOffset(0);
-      setData([]);
     },
     []
   );
@@ -44,6 +40,7 @@ const HomePage = () => {
     navigate(`/?search=${recipesStore.searchRecipe}`);
     setPage(1);
     setOffset(0);
+    setData([]);
   }, [recipesStore.searchRecipe]);
 
   const handleScroll = useCallback(() => {
@@ -72,18 +69,16 @@ const HomePage = () => {
     if (recipesStore.meta !== Meta.loading) {
       setData([
         ...data,
-        ...recipesStore.recipes.filter((el: RecipeItemModel) => !data.includes(el)),
+        ...recipesStore.recipes.filter(
+          (el: RecipeItemModel) => !data.includes(el)
+        ),
       ]);
     }
   }, [page]);
 
   return (
     <>
-      <Input
-        value={value}
-        onChange={handleChangeValue}
-        style={{ width: 560, margin: 10, height: 40 }}
-      />
+      <Input value={value} onChange={handleChangeValue} />
       <RecipesList recipes={data.length ? data : recipesStore.recipes} />
       {recipesStore.meta === Meta.loading && <Loader loading />}
     </>
