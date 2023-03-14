@@ -1,4 +1,5 @@
 @import "styles/vars";
+@import "styles/global";
 
 .input {
   width: 357px;
@@ -7,14 +8,13 @@
   border-radius: 6px;
   border: none;
   outline: none;
-  font-family: 'Avenir';
-  font-style: normal;
+  @include project-font;
   font-weight: 700;
   font-size: 15px;
   color: $greyTextColor;
   box-shadow: none;
   padding-left: 9px;
-  &.input_disabled {
+  &._disabled {
     background: linear-gradient(98.81deg, #f3e3e3 -0.82%, #d9d9d9 101.53%);
   }
   &:focus, &:hover {

@@ -3,6 +3,7 @@ import "regenerator-runtime";
 
 import ReactDOM from "react-dom/client";
 import "./config/configureMobX";
+import "./index.css";
 import "./styles/global.scss";
 import * as Router from "react-router-dom";
 
