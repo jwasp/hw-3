@@ -9,6 +9,7 @@ import useDebounce from "utils/useDebounce";
 import { useLocalStore } from "utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useLocation, useNavigate } from "react-router-dom";
+import styles from "./HomePage.module.scss";
 
 import RecipesList from "./components/RecipesList";
 import { useQueryParamsStoreInit } from "store/RootStore/hooks/useQueryParamsStoreInit";
@@ -75,13 +76,12 @@ const HomePage = () => {
       ]);
     }
   }, [page]);
-
   return (
-    <>
+    <div className={styles.homePage}>
       <Input value={value} onChange={handleChangeValue} />
       <RecipesList recipes={data.length ? data : recipesStore.recipes} />
       {recipesStore.meta === Meta.loading && <Loader loading />}
-    </>
+    </div>
   );
 };
 
