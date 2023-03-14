@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import classnames from 'classnames';
-import './Input.scss';
+import classnames from "classnames";
+import "./Input.scss";
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange'
+  "onChange"
 > & {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,16 +18,14 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <>
-      <input
-        type="text"
-        value={value}
-        {...props}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-        disabled={disabled}
-        className={classnames('input', className, disabled && 'input_disabled')}
-      />
-    </>
+    <input
+      type="text"
+      value={value}
+      {...props}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+      disabled={disabled}
+      className={classnames("input", className, disabled && "input_disabled")}
+    />
   );
 };
 
