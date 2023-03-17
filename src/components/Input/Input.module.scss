@@ -4,6 +4,7 @@
 .input {
   width: 357px;
   height: 34px;
+  margin-top: 2rem;
   background: linear-gradient(98.81deg, #fff0f0 -0.82%, #ffdfdf 101.53%);
   border-radius: 6px;
   border: none;
@@ -14,10 +15,10 @@
   color: $greyTextColor;
   box-shadow: none;
   padding-left: 9px;
-  &._disabled {
-    background: linear-gradient(98.81deg, #f3e3e3 -0.82%, #d9d9d9 101.53%);
+  &_disabled {
+    background: linear-gradient(98.81deg, #f3ebeb -0.82%, #d9d9d9 101.53%);
   }
-  &:focus, &:hover {
+  &:not([input_disabled]):focus, :not([input_disabled]):hover {
     background: linear-gradient(98.81deg, #FFBCBC -0.82%, #FFA1A1 101.53%);
   }
 }
