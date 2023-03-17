@@ -1,14 +1,14 @@
-import { apiKey } from "@config/api_key";
-import { normalizeRecipeItem, RecipeItemModel } from "@store/models/recipes";
+import { apiKey } from "config/api_key";
+import { normalizeRecipeItem, RecipeItemModel } from "store/models/recipes";
 import {
   CollectionModel,
   getInitialCollectionModel,
   linearizeCollection,
   normalizeCollection,
-} from "@store/models/shared/collection";
-import rootStore from "@store/RootStore";
-import { Meta } from "@utils/Meta";
-import { ILocalStore } from "@utils/useLocalStore";
+} from "store/models/shared/collection";
+import rootStore from "store/RootStore";
+import { Meta } from "utils/Meta";
+import { ILocalStore } from "utils/useLocalStore";
 import axios from "axios";
 import {
   makeObservable,

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { RecipeItemModel } from "@store/models/recipes";
-import { Button } from "antd";
 import { Link } from "react-router-dom";
 
 import Card from "./components/Card";

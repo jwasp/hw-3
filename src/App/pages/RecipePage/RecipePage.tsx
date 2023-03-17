@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import OneRecipeStore from "@store/OneRecipeStore";
-import { useLocalStore } from "@utils/useLocalStore";
+import OneRecipeStore from "store/OneRecipeStore";
+import { useLocalStore } from "utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 

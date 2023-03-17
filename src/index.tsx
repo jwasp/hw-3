@@ -1,4 +1,5 @@
 import React from "react";
+import "regenerator-runtime";
 
 import ReactDOM from "react-dom/client";
 import "./config/configureMobX";
@@ -18,3 +19,7 @@ root.render(
     </Router.BrowserRouter>
   </React.StrictMode>
 );
+
+if (module.hot) {
+  module.hot.accept();
+}

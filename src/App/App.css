@@ -5,10 +5,9 @@
   background-image: url('~/public/static/images/background-corner.svg');
   background-repeat: no-repeat;
   background-position: top right;
-  overflow: auto;
   box-sizing: border-box;
+  min-height: 100vh;
   margin: 0;
-  padding: 0;
 }
 
 

@@ -1,16 +1,17 @@
 import React from "react";
 
-import BackArrow from "@components/BackArrow";
-import Loader from "@components/Loader";
-import { IngredientItemModel } from "@store/models/recipes";
-import { Meta } from "@utils/Meta";
+import BackArrow from "components/BackArrow";
+import Loader from "components/Loader";
+import { IngredientItemModel } from "store/models/recipes";
+import { Meta } from "utils/Meta";
+import parse from 'html-react-parser';
 
 import styles from "./Recipe.module.scss";
 
 export type RecipeProps = {
   image: string;
   title: React.ReactNode;
-  content?: React.ReactNode;
+  content: string;
   likes: number;
   time: number;
   ingredients: IngredientItemModel[];
@@ -49,7 +50,7 @@ const Recipe: React.FC<RecipeProps> = ({
               })}
             </ul>
           </div>
-          <p className={styles.recipe__content}>{content}</p>
+          <p className={styles.recipe__content}>{parse(content)}</p>
         </div>
       </div>
     )}

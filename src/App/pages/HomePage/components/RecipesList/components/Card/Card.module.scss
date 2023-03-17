@@ -1,4 +1,4 @@
-@import "@styles/vars.scss";
+@import "styles/vars.scss";
 
 .card {
   width: 500px;
@@ -38,7 +38,7 @@
 
 @media screen and (max-width: 480px) {
   .card {
-    width: 174px;
+    width: 300px;
     height: 100px;
     padding-bottom: 3rem;
   }

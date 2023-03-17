@@ -1,11 +1,11 @@
-import { apiKey } from "@config/api_key";
+import { apiKey } from "config/api_key";
 import {
   normalizeRecipeCard,
   RecipeCardApi,
   RecipeCardModel,
-} from "@store/models/recipes";
-import { Meta } from "@utils/Meta";
-import { ILocalStore } from "@utils/useLocalStore";
+} from "store/models/recipes";
+import { Meta } from "utils/Meta";
+import { ILocalStore } from "utils/useLocalStore";
 import axios from "axios";
 import {
   makeObservable,

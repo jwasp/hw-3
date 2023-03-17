@@ -1,21 +1,22 @@
 import { useEffect, useCallback, useState } from "react";
 
-import Loader from "@components/Loader";
 import { RecipeItemModel } from "@store/models/recipes";
-import RecipesStore from "@store/RecipesStore";
-import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
-import { Meta } from "@utils/Meta";
-import useDebounce from "@utils/useDebounce";
-import { useLocalStore } from "@utils/useLocalStore";
-import { Input } from "antd";
+import RecipesStore from "store/RecipesStore";
+import Loader from "components/Loader";
+import Input from "components/Input";
+import { Meta } from "utils/Meta";
+import useDebounce from "utils/useDebounce";
+import { useLocalStore } from "utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useLocation, useNavigate } from "react-router-dom";
+import styles from "./HomePage.module.scss";
 
 import RecipesList from "./components/RecipesList";
+import { useQueryParamsStoreInit } from "store/RootStore/hooks/useQueryParamsStoreInit";
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   useQueryParamsStoreInit();
-  const recipesStore = useLocalStore(() => new RecipesStore());
+  const recipesStore = useLocalStore(() => new (RecipesStore as any)());
   const navigate = useNavigate();
   const initSearch = useLocation();
   let searchValue = initSearch.search.split("=")[1] ?? "";
@@ -25,25 +26,22 @@ const HomePage: React.FC = () => {
   const [offset, setOffset] = useState(0);
   const debouncedValueSearch = useDebounce<string | number>(value, 1000);
   const debouncedValueScroll = useDebounce<string | number>(page, 1000);
-
   const handleChangeValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
-      setPage(1);
-      setOffset(0);
-      setData([]);
     },
     []
   );
 
   useEffect(() => {
-    recipesStore.write(value);
+    recipesStore.write(debouncedValueSearch);
   }, [debouncedValueSearch]);
 
   useEffect(() => {
     navigate(`/?search=${recipesStore.searchRecipe}`);
     setPage(1);
     setOffset(0);
+    setData([]);
   }, [recipesStore.searchRecipe]);
 
   const handleScroll = useCallback(() => {
@@ -72,21 +70,19 @@ const HomePage: React.FC = () => {
     if (recipesStore.meta !== Meta.loading) {
       setData([
         ...data,
-        ...recipesStore.recipes.filter((el) => !data.includes(el)),
+        ...recipesStore.recipes.filter(
+          (el: RecipeItemModel) => !data.includes(el)
+        ),
       ]);
     }
-  }, [page]);
-
+  }, [recipesStore.recipes]);
+ 
   return (
-    <>
-      <Input
-        value={value}
-        onChange={handleChangeValue}
-        style={{ width: 560, margin: 10, height: 40 }}
-      />
+    <div className={styles.homePage}>
+      <Input value={value} onChange={handleChangeValue} />
       <RecipesList recipes={data.length ? data : recipesStore.recipes} />
       {recipesStore.meta === Meta.loading && <Loader loading />}
-    </>
+    </div>
   );
 };
 
