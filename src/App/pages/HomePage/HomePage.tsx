@@ -75,7 +75,8 @@ const HomePage = () => {
         ),
       ]);
     }
-  }, [page]);
+  }, [recipesStore.recipes]);
+ 
   return (
     <div className={styles.homePage}>
       <Input value={value} onChange={handleChangeValue} />
