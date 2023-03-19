@@ -1,21 +1,28 @@
 import React from "react";
 
 import { RecipeItemModel } from "@store/models/recipes";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Card from "./components/Card";
 import styles from "./RecipesList.module.scss";
 
 export type RecipesListProps = {
   recipes: RecipeItemModel[];
+  loading: Boolean;
 };
 
-const RecipesList: React.FC<RecipesListProps> = ({ recipes }) => {
+const RecipesList: React.FC<RecipesListProps> = ({ recipes, loading = true }) => {
   return (
     <div className={styles.RecipeList_container}>
+      {!recipes.length && <Card loading={loading}/>}
+      {!recipes.length && <Card loading={loading}/>}
+      {!recipes.length && <Card loading={loading}/>}
+      {!recipes.length && <Card loading={loading}/>}
+      {!recipes.length && <Card loading={loading}/>}
+      {!recipes.length && <Card loading={loading}/>}
       {recipes.map((recipe: RecipeItemModel) => (
         <Link to={`/recipe/${recipe.id}`} key={recipe.id}>
-          <Card image={recipe.image} title={recipe.title} />
+          <Card image={recipe.image} title={recipe.title}/>
         </Link>
       ))}
     </div>
