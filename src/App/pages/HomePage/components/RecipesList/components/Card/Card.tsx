@@ -1,20 +1,43 @@
+import React from "react";
+
 import styles from "./Card.module.scss";
 export type CardProps = {
-  image: string;
-  title: React.ReactNode;
+  image?: string;
+  loading?: Boolean;
+  title?: React.ReactNode;
   subtitle?: React.ReactNode;
   content?: React.ReactNode;
   onClick?: React.MouseEventHandler;
 };
 
-const Card: React.FC<CardProps> = ({ image, title, content, onClick }) => {
+const Card: React.FC<CardProps> = ({
+  image,
+  title,
+  onClick,
+  loading,
+}) => {
+
   return (
     <div className={styles.card} onClick={onClick}>
-      {content}
-      <img className={styles.card__img} src={image} alt="card-description" />
-      <div className={styles.card__title}>{title}</div>
+      {loading ? (
+        <>
+          <div className={styles.loading__element}></div>
+          <div className={styles.loading__element}></div>
+          <div className={styles.loading__element}></div>
+          <div className={styles.loading__element}></div>
+        </>
+      ) : (
+        <>
+          <img
+            className={styles.card__img}
+            src={image}
+            alt="card-description"
+          />
+          <div className={styles.card__title}>{title}</div>
+        </>
+      )}
     </div>
   );
 };
 
-export default Card;
+export default React.memo(Card);

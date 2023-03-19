@@ -19,6 +19,33 @@
   margin: 0 auto;
 }
 
+.loading__element {
+  width: 95%;
+  height: 5%;
+  margin-left: 6px;
+  margin-bottom: 0.7rem;
+  border-radius: .230rem;
+  animation: skeleton-loading 1s linear infinite alternate;
+  &:first-child {
+    margin: 0 auto;
+    width: 70%;
+    height: 65%;
+    margin-bottom: 2rem;
+  };
+  &:last-child {
+    width: 80%;
+  };
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 70%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
 .card__title {
   display: block;
   box-sizing: content-box;
@@ -43,7 +70,9 @@
     padding-bottom: 3rem;
   }
   .card__img {
-    width: 90px;
+    width: 70%;
+    height: 100%;
+    margin-top: 0;
   }
   .card__title {
     font-size: 15px;
