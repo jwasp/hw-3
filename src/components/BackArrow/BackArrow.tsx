@@ -4,15 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./BackArrow.module.scss";
 
-export type BackArrowProps = {
-  pathName: string;
-};
-
-const BackArrow: React.FC<BackArrowProps> = ({ pathName }) => {
+const BackArrow: React.FC = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(pathName);
+    navigate(-1);
   };
   return (
     <button type="button" onClick={handleBack} className={styles.button} />

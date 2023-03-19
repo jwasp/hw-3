@@ -32,7 +32,7 @@ const Recipe: React.FC<RecipeProps> = ({
     ) : (
       <div className={styles.container}>
         <div className={styles.recipe__button}>
-          <BackArrow pathName="/" />
+          <BackArrow />
         </div>
         <img src={image} alt="recipe img" className={styles.container__img} />
         <div className={styles.container__info}>
