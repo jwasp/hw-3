@@ -27,7 +27,7 @@ const HomePage = () => {
   let queryString;
 
   const navigate = useNavigate();
-  const [value, setValue] = useState<any>(searchValue);
+  const [value, setValue] = useState<any>(searchValue ? searchValue : "");
   const [data, setData] = useState<RecipeItemModel[]>([]);
   const [page, setPage] = useState(pageValue ? pageValue : 1);
   const [type, setType] = useState<any>(typeValue);
@@ -91,7 +91,11 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (recipesStore.meta !== Meta.loading && downloadData) {
+    if (
+      recipesStore.meta !== Meta.loading &&
+      downloadData &&
+      recipesStore.recipes.length !== 0 && data.length < recipesStore.totalItems
+    ) {
       setPage((prev) => prev + 1);
       setOffset((prev) => prev + 8);
     }
@@ -100,19 +104,16 @@ const HomePage = () => {
   useEffect(() => {
     if (recipesStore.meta !== Meta.loading && page !== 1) {
       recipesStore.getRecipes(searchValue, page, offset, type);
-      setDownloadData(false);
     }
     setDownloadData(false);
   }, [page]);
 
   useEffect(() => {
-    if (recipesStore.meta !== Meta.loading) {
-      setData([
-        ...data,
-        ...recipesStore.recipes.filter(
-          (el: RecipeItemModel) => !data.includes(el)
-        ),
-      ]);
+    if (
+      recipesStore.meta !== Meta.loading &&
+      data[0]?.id !== recipesStore.recipes[0]?.id
+    ) {
+      setData([...data, ...recipesStore.recipes]);
       setDownloadData(false);
     }
   }, [recipesStore.recipes]);

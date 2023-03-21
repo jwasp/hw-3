@@ -20,21 +20,24 @@ import {
   IReactionDisposer,
 } from "mobx";
 
-type PrivateFields = "_recipes" | "_meta" | "_searchRecipe";
+type PrivateFields = "_recipes" | "_meta" | "_searchRecipe" | "_totalItems";
 export default class RecipesStore implements ILocalStore {
   private _recipes: CollectionModel<number, RecipeItemModel> =
     getInitialCollectionModel();
   private _meta = Meta.initial;
   private _searchRecipe = "";
+  private _totalItems = 0;
 
   constructor() {
     makeObservable<RecipesStore, PrivateFields>(this, {
       _recipes: observable.ref,
       _meta: observable,
+      _totalItems: observable,
       _searchRecipe: observable,
       recipes: computed,
       searchRecipe: computed,
       meta: computed,
+      totalItems: computed,
       getRecipes: action,
       write: action,
     });
@@ -48,6 +51,10 @@ export default class RecipesStore implements ILocalStore {
     return this._meta;
   }
 
+  get totalItems(): number {
+    return this._totalItems;
+  }
+
   get searchRecipe(): string {
     return this._searchRecipe;
   }
@@ -57,10 +64,10 @@ export default class RecipesStore implements ILocalStore {
   };
 
   async getRecipes(
-    search: string | string[] | any | undefined,
+    search: string | string[] | any,
     page: number,
     offset: number,
-    type?: string | string[] | any | undefined,
+    type?: string | string[] | any,
     numberItems?: number,
   ): Promise<void> {
     this._meta = Meta.loading;
@@ -84,6 +91,7 @@ export default class RecipesStore implements ILocalStore {
         }
 
         this._meta = Meta.success;
+        this._totalItems = response.data.totalResults;
         this._recipes = normalizeCollection(
           recipes,
           (recipeItem) => recipeItem.id
