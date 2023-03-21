@@ -5,7 +5,7 @@
   width: 357px;
   height: 34px;
   margin-top: 2rem;
-  background: linear-gradient(98.81deg, #fff0f0 -0.82%, #ffdfdf 101.53%);
+  background: linear-gradient(98.81deg, #f9e3e3 -0.82%, #f7c3c3 101.53%);
   border-radius: 6px;
   border: none;
   outline: none;
@@ -15,11 +15,13 @@
   color: $greyTextColor;
   box-shadow: none;
   padding-left: 9px;
+  transition: 0.5s ease;
   &.disabled {
+    pointer-events: none;
     background: linear-gradient(98.81deg, #f3ebeb -0.82%, #d9d9d9 101.53%);
   }
-  &:not([input_disabled]):focus, :not([input_disabled]):hover {
-    background: linear-gradient(98.81deg, #FFBCBC -0.82%, #FFA1A1 101.53%);
+  &:focus, &:hover {
+    background: linear-gradient(98.81deg, #ffbcbc -0.82%, #FFA1A1 101.53%);
   }
   @media screen and (max-width: 480px) {
     width: 300px;
