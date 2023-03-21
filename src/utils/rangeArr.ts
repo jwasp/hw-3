@@ -1,0 +1,1 @@
+export const arrRange = (n: number) => [...Array(n).keys()];

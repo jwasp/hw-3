@@ -1,9 +1,10 @@
 {
-  "name": "cra-food",
+  "name": "hw-3",
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
   "repository": "https://github.com/jwasp/hw-3.git",
+  "homepage": "https://jwasp.github.io/hw-3/",
   "author": "jwasp <nigushaa@yandex.ru>",
   "license": "MIT",
   "dependencies": {
@@ -31,7 +32,9 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development npx webpack serve --mode=development",
-    "build": "NODE_ENV=production npx webpack --mod=production"
+    "build": "webpack --mode production",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
@@ -68,6 +71,7 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.3",
     "postcss-loader": "^7.0.2",

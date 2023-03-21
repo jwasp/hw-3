@@ -20,21 +20,24 @@ import {
   IReactionDisposer,
 } from "mobx";
 
-type PrivateFields = "_recipes" | "_meta" | "_searchRecipe";
+type PrivateFields = "_recipes" | "_meta" | "_searchRecipe" | "_totalItems";
 export default class RecipesStore implements ILocalStore {
   private _recipes: CollectionModel<number, RecipeItemModel> =
     getInitialCollectionModel();
   private _meta = Meta.initial;
   private _searchRecipe = "";
+  private _totalItems = 0;
 
   constructor() {
     makeObservable<RecipesStore, PrivateFields>(this, {
       _recipes: observable.ref,
       _meta: observable,
+      _totalItems: observable,
       _searchRecipe: observable,
       recipes: computed,
       searchRecipe: computed,
       meta: computed,
+      totalItems: computed,
       getRecipes: action,
       write: action,
     });
@@ -48,6 +51,10 @@ export default class RecipesStore implements ILocalStore {
     return this._meta;
   }
 
+  get totalItems(): number {
+    return this._totalItems;
+  }
+
   get searchRecipe(): string {
     return this._searchRecipe;
   }
@@ -57,16 +64,18 @@ export default class RecipesStore implements ILocalStore {
   };
 
   async getRecipes(
-    search: string | string[] | any | undefined,
+    search: string | string[] | any,
     page: number,
-    offset: number
+    offset: number,
+    type?: string | string[] | any,
+    numberItems?: number,
   ): Promise<void> {
     this._meta = Meta.loading;
     this._recipes = getInitialCollectionModel();
     try {
       const response = await axios({
         method: "get",
-        url: `https://api.spoonacular.com/recipes/complexSearch?query=${search}&page=${page}&number=8&offset=${offset}&apiKey=${apiKey}`,
+        url: `https://api.spoonacular.com/recipes/complexSearch?query=${search}&type=${type ? type : ""}&page=${page}&number=${numberItems ? numberItems : 8}&offset=${offset}&apiKey=${apiKey}`,
       });
 
       runInAction(() => {
@@ -82,6 +91,7 @@ export default class RecipesStore implements ILocalStore {
         }
 
         this._meta = Meta.success;
+        this._totalItems = response.data.totalResults;
         this._recipes = normalizeCollection(
           recipes,
           (recipeItem) => recipeItem.id
@@ -102,7 +112,23 @@ export default class RecipesStore implements ILocalStore {
   private readonly _qpReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     async (search) => {
-      await this.getRecipes(search, 1, 0);
+      await this.getRecipes(
+        search,
+        Number(rootStore.query.getParam("page")),
+        Number(rootStore.query.getParam("offset")),
+        rootStore.query.getParam("type"),
+      );
+    }
+  );
+  private readonly _tpReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParam("type"),
+    async (type) => { 
+      await this.getRecipes(
+        rootStore.query.getParam("search"),
+        Number(rootStore.query.getParam("page")),
+        Number(rootStore.query.getParam("offset")),
+        type,
+      );
     }
   );
 }

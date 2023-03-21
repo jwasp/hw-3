@@ -24,7 +24,7 @@ export const Input: React.FC<InputProps> = ({
       {...props}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
       disabled={disabled}
-      className={classnames(styles.input, disabled && styles.input_disabled)}
+      className={classnames(styles.input, disabled && styles.disabled)}
     />
   );
 };
