@@ -1,6 +1,9 @@
 import React from "react";
+import classnames from "classnames";
 
 import styles from "./Card.module.scss";
+import { arrRange } from "utils/rangeArr";
+
 export type CardProps = {
   image?: string;
   loading?: Boolean;
@@ -10,22 +13,17 @@ export type CardProps = {
   onClick?: React.MouseEventHandler;
 };
 
-const Card: React.FC<CardProps> = ({
-  image,
-  title,
-  onClick,
-  loading,
-}) => {
-
+const Card: React.FC<CardProps> = ({ image, title, onClick, loading }) => {
+  const loadElementsArray = arrRange(4);
   return (
-    <div className={styles.card} onClick={onClick}>
+    <div
+      className={classnames(styles.card, loading && styles.loading)}
+      onClick={onClick}
+    >
       {loading ? (
-        <>
-          <div className={styles.loading__element}></div>
-          <div className={styles.loading__element}></div>
-          <div className={styles.loading__element}></div>
-          <div className={styles.loading__element}></div>
-        </>
+        loadElementsArray.map((el) => (
+          <div key={el} className={styles.loading__element}></div>
+        ))
       ) : (
         <>
           <img

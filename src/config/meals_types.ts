@@ -1,0 +1,17 @@
+export const types = [
+    { id: 0, value: "main course" },
+    { id: 1, value: "side dish" },
+    { id: 2, value: "dessert" },
+    { id: 3, value: "appetizer" },
+    { id: 4, value: "salad" },
+    { id: 5, value: "bread" },
+    { id: 6, value: "breakfast" },
+    { id: 7, value: "soup" },
+    { id: 8, value: "beverage" },
+    { id: 9, value: "sauce" },
+    { id: 10, value: "marinade" },
+    { id: 11, value: "fingerfood" },
+    { id: 12, value: "snack" },
+    { id: 13, value: "drink" },
+    { id: 14, value: "all" },
+  ];
