@@ -1,6 +1,13 @@
 ## You can see my project here 
 https://jwasp.github.io/recipe-search/
 
+## I have implemented in this project
+- Infinite Scroll (without using library)
+- rebuilt webpack
+- the project has a skeleton
+- search and filter using query-parameters
+- using React, MobX
+
 ## Available Scripts
 
 In the project directory, you can run:
