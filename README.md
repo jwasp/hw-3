@@ -1,4 +1,4 @@
-## You can see my project on the 
+## You can see my project here 
 https://jwasp.github.io/recipe-search/
 
 ## Available Scripts
