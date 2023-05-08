@@ -33,7 +33,7 @@ const HomePage = () => {
   const [type, setType] = useState<any>(typeValue);
   const [offset, setOffset] = useState(offsetValue ? offsetValue : 0);
   const [downloadData, setDownloadData] = useState(true);
-  const debouncedValueSearch = useDebounce<any>(value, 1000);
+  const debouncedValueSearch = useDebounce<String>(value, 1000);
   const handleChangeValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);

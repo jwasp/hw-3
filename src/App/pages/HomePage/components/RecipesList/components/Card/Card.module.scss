@@ -25,6 +25,10 @@
       font-size: 3rem;
       font-weight: 600;
       animation: fade 1s;
+      @media screen and (max-width: 480px) {
+        top: 30%;
+        font-size: 2.5rem;
+      }
     }
   }
   &.loading {
@@ -95,7 +99,7 @@
   .card {
     width: 300px;
     height: 100px;
-    padding-bottom: 3rem;
+    padding-bottom: 4rem;
   }
   .card__img {
     width: 70%;

@@ -20,8 +20,9 @@
     pointer-events: none;
     background: linear-gradient(98.81deg, #f3ebeb -0.82%, #d9d9d9 101.53%);
   }
-  &:focus, &:hover {
-    background: linear-gradient(98.81deg, #ffbcbc -0.82%, #FFA1A1 101.53%);
+  &:focus,
+  &:hover {
+    background: linear-gradient(98.81deg, #ffbcbc -0.82%, #ffa1a1 101.53%);
   }
   @media screen and (max-width: 480px) {
     width: 300px;
@@ -30,4 +31,11 @@
     font-size: 20px;
     width: 500px;
   }
+}
+
+.input_container::after {
+  content: url("~/public/static/images/search.svg");
+  position: absolute;
+  margin-left: -2.2rem;
+  margin-top: 2.3rem;
 }
